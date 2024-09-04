@@ -1,0 +1,16 @@
+# version: 3 // сейчас так не пишут 
+
+services: 
+  angular: # // можно назвать web
+    build: . # на // базе образа сделать свой // еще есть image
+    volumes:
+      - ./:/app
+    container_name: nodejs-app
+    command: ng build --watch --configuration development
+
+  web-server:
+    image: nginx:stable-alpine3.20 # // нет инструкции build, есть только команда запуска run
+    ports:
+      - 4200:80 # внешний и внутренний порт
+    volumes:
+      - ./dist/browser:/usr/share/nginx/html:ro
